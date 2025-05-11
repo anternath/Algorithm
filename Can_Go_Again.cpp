@@ -40,15 +40,31 @@ int main(){
             }
         }
     }
-   while(t--){
-    int x,y;
-    cin>>x>>y;
-    if(des[x]<=y){
-        cout<<"YES"<<endl;
-    }
-    else{
-        cout<<"NO"<<endl;
-    }
-   }
+    bool check = false;
+    for(edge e: vc){
+            ll u=e.u;
+            ll v=e.v;
+            ll c=e.c;
+            if(des[u]<LONG_MAX && des[u]+c< des[v]){
+                check =true;
+                break;
+            }
+        }
+        if(check){
+            cout<<"Negative Cycle Detected"<<endl;
+        }
+        else{
+           while(t--){
+             int p;
+            cin>>p;
+            if(des[p]==LONG_MAX){
+                cout<<"Not Possible"<<endl;
+            }
+            else{
+                cout<<des[p]<<endl;
+            }
+        }
+        }
+
     return 0;
 }
