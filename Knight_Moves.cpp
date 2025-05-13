@@ -32,10 +32,8 @@ int dfs(int (&ar)[105][105], bool (&vis)[105][105], int i, int j,int x,int y){
             }
         }
     }
-    if(!check){
-        return -1;
-    }
-   
+    
+   return -1;
 }
 int main(){
     int t;
