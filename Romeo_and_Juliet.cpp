@@ -1,20 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
-vector<int>ar[200005];
-int par[200005];
-bool vis[200005]={false};
+const int N=1e5+5;
+vector<int> ar[N];
+bool vis[N]={false};
+int des[N];
 void bfs(int src){
     queue<int> q;
     q.push(src);
     vis[src]=true;
+    des[src]=0;
     while(!q.empty()){
         int pr= q.front();
         q.pop();
         for(int child: ar[pr]){
             if(vis[child]==false){
-                q.push(child);
                 vis[child]=true;
-                par[child]=pr;
+               q.push(child);
+               des[child]=des[pr]+1;
             }
         }
     }
@@ -22,8 +24,8 @@ void bfs(int src){
 int main(){
     int n,e;
     cin>>n>>e;
-    for(int i=1; i<=n; i++){
-        par[i]=-1;
+    for(int i=0; i<=n; i++){
+        des[i]=-1;
     }
     while(e--){
         int a,b;
@@ -31,20 +33,19 @@ int main(){
         ar[a].push_back(b);
         ar[b].push_back(a);
     }
-    bfs(1);
-    if(par[n]==-1){
-        cout<<"IMPOSSIBLE"<<endl;
+    int src,end,step;
+    cin>>src>>end>>step;
+    bfs(src);
+    if(des[end]==-1){
+        cout<<"NO"<<endl;
     }
     else{
-        vector<int>v;
-        for(int i=n; i!=-1; i=par[i]){
-            v.push_back(i);
-        }
-        reverse(v.begin(),v.end());
-        cout<<v.size()<<endl;
-        for(int val:v){
-            cout<<val<<" ";
-        }
+        if(des[end]<=step*2){
+        cout<<"YES"<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
     }
     return 0;
 }

@@ -1,49 +1,56 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e5+5;
-vector<int> ar[N];
-int en;
-bool vis[N]={false};
-void dfs(int src){
-    vis[src]=true;
-    for(int child: ar[src]){
-        if(vis[child]==false){
-            en=child;
-            dfs(child);
-        }
+vector<int> ar[200005];
+int par[200005];
+int siz[200005];
+void init(int n){
+    for(int i=1; i<=n; i++){
+        par[i]=-1;
+        siz[i]=1;
+    }
+}
+int find(int node){
+    if(par[node]==-1) return node;
+    int leader = find(par[node]);
+    par[node]=leader;
+    return leader;
+}
+void dsu_union(int node1, int node2){
+    int leaderA= find(node1);
+    int leaderB = find(node2);
+    if(siz[leaderA]>siz[leaderB]){
+        par[leaderB]= leaderA;
+        siz[leaderA]+= siz[leaderB];
+    }
+    else{
+        par[leaderA]=leaderB;
+        siz[leaderB]+= siz[leaderA];
     }
 }
 int main(){
     int n,e;
     cin>>n>>e;
+    init(n);
     while(e--){
         int a,b;
         cin>>a>>b;
-        ar[a].push_back(b);
-        ar[b].push_back(a);
+       int leaderA= find(a);
+       int leaderB= find(b);
+       if(leaderA!=leaderB){
+        dsu_union(a,b);
+       }
     }
-    vector<pair<int,int>> v;
-    int track;
-    int track2;
-    int cnt=-1;
+    vector<int>leader;
     for(int i=1; i<=n; i++){
-        if(vis[i]==false){
-            cnt++;
-            dfs(i);
-            track=en;
-            for(int i=1; i<=n; i++){
-                if(vis[i]==false){
-                    track2=i;
-                    v.push_back({track,track2});
-                    break;
-                }
-            }
-        }
-        
+       leader.push_back(find(i));
     }
-    cout<<cnt<<endl;
-    for(pair<int,int> path: v){
-        cout<<path.first<<" "<<path.second<<endl;
+    sort(leader.begin(),leader.end());
+    leader.erase(unique(leader.begin(),leader.end()),leader.end());
+    cout<<leader.size()-1<<endl;
+    if(leader.size()>1){
+        for(int val: leader){
+        cout<<val<<" ";
+    }
     }
     return 0;
 }
