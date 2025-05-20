@@ -43,6 +43,7 @@ int main(){
         int ei,ej;
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
+                // des[n][n]=-1;
                 cin>>ar[i][j];
                 if(ar[i][j]=='S'){
                     si=i;
