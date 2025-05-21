@@ -2,7 +2,7 @@
 using namespace std;
 const int N=1e5+5;
 vector<int> ar[N];
-bool visit[N]={false};
+bool vis[N]={false};
 bool cv[1000]={false};
 bool cvp[1000]={false};
 bool path[N]={false};
@@ -10,7 +10,7 @@ bool check=false;
 vector<int>v;
 int cnt=0;
 void dfs(int src){
-    visit[src]=true;
+    vis[src]=true;
     path[src]=true;
     for(int child: ar[src]){
         if(path[child]==true){
@@ -18,7 +18,7 @@ void dfs(int src){
             v.push_back(child);
             check=true;
         }
-        if(visit[child]==false){
+        if(vis[child]==false){
             dfs(child);
         }
     }

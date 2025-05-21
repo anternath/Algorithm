@@ -2,7 +2,7 @@
 using namespace std;
 int n;
 char ar[100][100];
-bool vis[100][100]={false};
+bool vis[100][100];
 int des[100][100];
 bool valid(int i, int j){
     if(i<0 || i>=n || j<0 || j>=n){
@@ -39,11 +39,12 @@ int main(){
     pth.push_back({0,-1});
     pth.push_back({0,1});
     while(cin>>n){
+        memset(vis,false,sizeof(vis));
+        memset(des,-1,sizeof(des));
         int si,sj;
         int ei,ej;
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
-                // des[n][n]=-1;
                 cin>>ar[i][j];
                 if(ar[i][j]=='S'){
                     si=i;
@@ -56,10 +57,10 @@ int main(){
             }
         }
          bfs(si,sj);
-         cout<<des[ei][ej];
-         return 0;
+         cout<<des[ei][ej]<<endl;
+        
     }
-   
+    return 0;
 
     
 }

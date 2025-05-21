@@ -62,6 +62,9 @@ int main(){
             ans= max(ans,pth);
         }
         cout<<"Case "<<cs++<<": "<<ans<<endl;
+        for(int i=0; i<n; i++){
+            ar[i].clear();
+        }
     }
     return 0;
 }
