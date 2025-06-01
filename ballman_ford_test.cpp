@@ -34,8 +34,23 @@ int main(){
             }
         }
     }
-    for(int i=0; i<n; i++){
+    bool check=false;
+    for(Edges edn: ed){
+         int u=edn.u;
+            int v=edn.v;
+            int w=edn.w;
+            if(des[u]<INT_MAX && des[u]+w< des[v]){
+                check=true;
+            }
+    }
+    if(check){
+        cout<<"Cycle founded!!"<<endl;
+        cout<<"No result"<<endl;
+    }
+    else{
+        for(int i=0; i<n; i++){
         cout<<des[i]<<" ";
+    }
     }
     return 0;
 }
