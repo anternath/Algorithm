@@ -1,31 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 vector<int> ar[500];
-int des[105];
-int src[105];
-bool vis[105];
-void dfs(int s, int track){
+int dis_of_src[500];
+int dis_of_des[500];
+bool vis[500];
+void bfs(int s, int track){
     queue<int> q;
     q.push(s);
-    vis[s]=true;
     if(track==1){
-        src[s]=0;
+        dis_of_src[s]=0;
     }
     else{
-        des[s]=0;
+        dis_of_des[s]=0;
     }
+    vis[s]=true;
     while(!q.empty()){
         int par= q.front();
         q.pop();
-        for(int child: ar[par]){
-            if(vis[child]==false){
-                q.push(child);
-                vis[child]=true;
+        for(int ed: ar[par]){
+            if(vis[ed]==false){
+                 q.push(ed);
+                vis[ed]=true;
                 if(track==1){
-                    src[child]= src[par]+1;
+                    dis_of_src[ed]=dis_of_src[par]+1;
                 }
                 else{
-                    des[child]=des[par]+1;
+                    dis_of_des[ed]=dis_of_des[par]+1;
                 }
             }
         }
@@ -36,7 +36,7 @@ int main(){
     cin>>t;
     int cs=1;
     while(t--){
-        int n,e;
+        int e,n;
         cin>>n>>e;
         while(e--){
             int a,b;
@@ -44,22 +44,22 @@ int main(){
             ar[a].push_back(b);
             ar[b].push_back(a);
         }
-        int sr,ds;
-        cin>>sr>>ds;
-        for(int k=0; k<n; k++){
-            src[k]=-1;
-            vis[k]=false;
+        int si,di;
+        cin>>si>>di;
+        for(int i=0; i<n; i++){
+            dis_of_src[i]=-1;
+            vis[i]=false;
         }
-        dfs(sr,1);
-        for(int k=0; k<n; k++){
-            des[k]=-1;
-            vis[k]=false;
+        bfs(si,1);
+        for(int i=0; i<n; i++){
+            dis_of_des[i]=-1;
+            vis[i]=false;
         }
-        dfs(ds,2);
+        bfs(di,2);
         int ans=INT_MIN;
         for(int i=0; i<n; i++){
-            int pth= des[i]+src[i];
-            ans= max(ans,pth);
+            int path= dis_of_des[i]+dis_of_src[i];
+            ans=max(ans,path);
         }
         cout<<"Case "<<cs++<<": "<<ans<<endl;
         for(int i=0; i<n; i++){
