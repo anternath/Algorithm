@@ -1,16 +1,17 @@
 #include<bits/stdc++.h>
 using namespace std;
-int par[1005];
-int siz[1005];
+int n;
+int par[100005];
+int siz[100005];
 void init(int n){
     for(int i=1; i<=n; i++){
         par[i]=-1;
-        siz[i]=1;
+        siz[i]=0;
     }
 }
 int find(int node){
     if(par[node]==-1) return node;
-    int leader= find(par[node]);
+    int leader = find(par[node]);
     par[node]=leader;
     return leader;
 }
@@ -27,34 +28,22 @@ void dsu_union(int node1, int node2){
     }
 }
 int main(){
-    int n;
-    cin>>n;
-    vector<pair<int,int>> remove;
-    vector<pair<int,int>> add;
+    int e;
+    int cnt=0;
+    cin>>n>>e;
     init(n);
-    for(int i=1; i<n; i++){
+    for(int i=0; i<e; i++){
         int a,b;
         cin>>a>>b;
         int leaderA= find(a);
         int leaderB= find(b);
         if(leaderA==leaderB){
-            remove.push_back({a,b});
+            cnt++;
         }
         else{
-            dsu_union(a,b);
+            dsu_union(leaderA,leaderB);
         }
     }
-    for(int i=1; i<=n; i++){
-        int leaderA =find(1);
-        int leaderB= find(i);
-        if(leaderA!=leaderB){
-            add.push_back({leaderA,i});
-            dsu_union(leaderA,i);
-        }
-    }
-    cout<<remove.size()<<endl;
-    for(int i=0; i<remove.size(); i++){
-        cout<<remove[i].first<<" "<<remove[i].second<<" "<<add[i].first<<" "<<add[i].second<<" ";
-    }
+    cout<<cnt<<endl;
     return 0;
 }
